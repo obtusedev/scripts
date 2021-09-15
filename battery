@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Return information on battery
+# Copyright 2021 obtusedev
+
+set -e
+
+usage() {
+cat << EOF
+Usage: $0 [option]
+-h, --help     print help
+-V, --version  print version
+EOF
+}
