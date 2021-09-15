@@ -5,10 +5,6 @@
 
 set -e
 
-usage() {
-cat << EOF
-Usage: $0 [option]
+HELP="Usage: $0 [option]
 -h, --help     print help
--V, --version  print version
-EOF
-}
+-V, --version  print version"
