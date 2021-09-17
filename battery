@@ -31,7 +31,7 @@ battery_info() {
   echo "battery warning: ${battery[warning-level]}"
   echo "battery percentage: ${battery[percentage]}"
   echo "battery capacity: ${battery[capacity]}"
-  if [ ${battery[state]} == 'discharging']; then
+  if [ "${battery[state]}" == 'discharging' ]; then
     echo "battery time to empty: ${battery[time-to-empty]}"
   fi
 }
