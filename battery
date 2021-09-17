@@ -10,3 +10,8 @@ HELP="Usage: $0 [option]
 -V, --version  print version"
 
 VERSION="battery version 1.0"
+
+battery_info_verbose() {
+  battery_path=$(upower -e | sed -n '2p')
+  echo "Battery file located at: $battery_path"
+}
