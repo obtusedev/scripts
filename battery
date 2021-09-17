@@ -7,7 +7,8 @@ set -e
 
 HELP="Usage: $0 [option]\n
 -h, --help     print help\n
--V, --version  print version"
+-V, --version  print version\n
+-v, --verbose  verbose ouput"
 
 VERSION='battery version 1.0'
 
@@ -36,12 +37,14 @@ battery_info() {
 }
 
 if [ $# -eq 0 ]; then
-  battery_info_verbose
+  battery_info
 elif [ $# -eq 1 ]; then
   if [ "$1" == '-V' ] || [ "$1" == '--version' ]; then
     echo "$VERSION"
   elif [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
     echo -e "$HELP"
+  elif [ "$1" == '-v' ] || [ "$1" == '--verbose' ]; then
+    battery_info_verbose
   else
     echo "Invalid flag $1"
   fi
