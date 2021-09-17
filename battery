@@ -5,8 +5,8 @@
 
 set -e
 
-HELP="Usage: $0 [option]
--h, --help     print help
+HELP="Usage: $0 [option]\n
+-h, --help     print help\n
 -V, --version  print version"
 
 VERSION="battery version 1.0"
