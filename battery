@@ -15,3 +15,17 @@ battery_info_verbose() {
   battery_path=$(upower -e | sed -n '2p')
   echo "Battery file located at: $battery_path"
 }
+
+if [ $# -eq 0 ]; then
+  battery_info_verbose
+elif [ $# -eq 1 ]; then
+  if [ $1 == '-V' ] || [ $1 == '--version' ]; then
+    echo $VERSION
+  elif [ $1 == '-h' ] || [ $1 == '--help' ]; then
+    echo -e $HELP
+  else
+    echo "Invalid flag $1"
+  fi
+else
+  echo "Something went wrong"
+fi
