@@ -10,11 +10,19 @@ HELP="Usage: $0 [option]\n
 -V, --version  print version"
 
 VERSION='battery version 1.0'
-BATTERY_PATH=$(upower -e | sed -n '2p')
+
+declare -A battery
+battery[path]=$(upower -e | sed -n '2p')
+battery[output]=$(upower -i "$BATTERY_PATH")
+battery[state]=$(${battery[output]} | awk '/state/ {print $2}')
+battery[warning-level]=$(${battery[output]} | awk '/warning-level/ {print $2}')
+battery[percentage]=$(${battery[output]} | awk '/percentage/ {print $2}')
+battery[capacity]=$(${battery[output]} | awk '/capacity/ {print $2}')
+battery[time-to-empty]=''
 
 battery_info_verbose() {
-  echo "Battery file located at: $BATTERY_PATH"
-  upower -i "$BATTERY_PATH"
+  echo "Battery file located at: ${battery[path]}"
+  ${battery[ouput]}
 }
 
 if [ $# -eq 0 ]; then
