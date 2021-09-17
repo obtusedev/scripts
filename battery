@@ -28,10 +28,10 @@ battery_info_verbose() {
 if [ $# -eq 0 ]; then
   battery_info_verbose
 elif [ $# -eq 1 ]; then
-  if [ $1 == '-V' ] || [ $1 == '--version' ]; then
-    echo $VERSION
-  elif [ $1 == '-h' ] || [ $1 == '--help' ]; then
-    echo -e $HELP
+  if [ "$1" == '-V' ] || [ "$1" == '--version' ]; then
+    echo "$VERSION"
+  elif [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
+    echo -e "$HELP"
   else
     echo "Invalid flag $1"
   fi
