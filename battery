@@ -9,11 +9,12 @@ HELP="Usage: $0 [option]\n
 -h, --help     print help\n
 -V, --version  print version"
 
-VERSION="battery version 1.0"
+VERSION='battery version 1.0'
 
 battery_info_verbose() {
   battery_path=$(upower -e | sed -n '2p')
   echo "Battery file located at: $battery_path"
+  upower -i "$battery_path"
 }
 
 if [ $# -eq 0 ]; then
@@ -27,5 +28,5 @@ elif [ $# -eq 1 ]; then
     echo "Invalid flag $1"
   fi
 else
-  echo "Something went wrong"
+  echo 'Something went wrong'
 fi
