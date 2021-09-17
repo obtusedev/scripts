@@ -25,6 +25,16 @@ battery_info_verbose() {
   ${battery[ouput]}
 }
 
+battery_info() {
+  echo "battery state: ${battery[state]}"
+  echo "battery warning: ${battery[warning-level]}"
+  echo "battery percentage: ${battery[percentage]}"
+  echo "battery capacity: ${battery[capacity]}"
+  if [ ${battery[state]} == 'discharging']; then
+    echo "battery time to empty: ${battery[time-to-empty]}"
+  fi
+}
+
 if [ $# -eq 0 ]; then
   battery_info_verbose
 elif [ $# -eq 1 ]; then
