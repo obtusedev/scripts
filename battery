@@ -19,7 +19,7 @@ battery[state]=$(echo "${battery[output]}" | awk '/state/ {print $2}')
 battery[warning-level]=$(echo "${battery[output]}" | awk '/warning-level/ {print $2}')
 battery[percentage]=$(echo "${battery[output]}" | awk '/percentage/ {print $2}')
 battery[capacity]=$(echo "${battery[output]}" | awk '/capacity/ {print $2}')
-battery[time-to-empty]=$(echo "${battery[output]}" | awk '/time to empty/ {print $2}')
+battery[time-to-empty]=$(echo "${battery[output]}" | awk '/time/ {print $4, $5}')
 
 battery_info_verbose() {
   echo "Battery file located at: ${battery[path]}"
