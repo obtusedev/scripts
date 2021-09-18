@@ -23,7 +23,7 @@ battery[time-to-empty]=$(echo "${battery[output]}" | awk '/time/ {print $4, $5}'
 
 battery_info_verbose() {
   echo "Battery file located at: ${battery[path]}"
-  "${battery[ouput]}"
+  echo -e "${battery[output]}"
 }
 
 battery_info() {
