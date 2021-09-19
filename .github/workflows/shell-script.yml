@@ -1,0 +1,35 @@
+name: shell-script-ci
+on:
+  push:
+    branches:
+      - "master"
+jobs:
+  shellcheck:
+    name: Shellcheck on latest version of Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install upower
+        run: sudo apt-get install upower
+
+      - name: run shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          severity: error
+
+      - name: install scripts
+        run: ./install
+
+      - name: output current $HOME/bin
+        run: ls -la $HOME/bin
+
+      - name: export PATH
+        run: echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: verify install script was not copied to $HOME/bin
+        run: "! find $HOME/bin -name 'install' | grep ."
+
+      - name: test script
+        run: battery --version
