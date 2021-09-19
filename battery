@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 # Return information on battery
 # Copyright 2021 obtusedev
@@ -10,7 +10,7 @@ HELP="Usage: $0 [option]\n
 -V, --version  print version\n
 -v, --verbose  verbose ouput"
 
-VERSION='battery version 1.0'
+VERSION='battery version 1.0 program to check battery information'
 
 declare -A battery
 battery[path]=$(upower -e | sed -n '2p')
@@ -40,7 +40,7 @@ if [ $# -eq 0 ]; then
   battery_info
 elif [ $# -eq 1 ]; then
   if [ "$1" == '-V' ] || [ "$1" == '--version' ]; then
-    echo "$VERSION"
+    echo -e "$VERSION"
   elif [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
     echo -e "$HELP"
   elif [ "$1" == '-v' ] || [ "$1" == '--verbose' ]; then
