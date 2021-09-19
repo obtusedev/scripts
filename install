@@ -1,0 +1,65 @@
+#!/bin/env bash
+
+# Install all shell scripts to bin
+# Copyright 2021 obtusedev
+
+set -e
+
+VERSION='install version: 1.0\n
+program to install scripts to ~/bin'
+
+HELP="Usage: $0 [options]\n
+-V, --version     print version\n
+-h, --help        print help"
+
+check_if_bin_in_path() {
+  if [[ "$PATH" =~ $HOME/bin ]]; then
+    echo "Current PATH: $PATH"
+    echo "$HOME/bin is in PATH: OK"
+  else
+    echo "Current PATH: $PATH"
+    echo "$HOME/bin is in PATH: NO"
+    #TODO: AUTOADD TO PATH
+  fi
+}
+
+check_if_bin_exists() {
+if [ ! -d "$HOME/bin" ]; then
+  echo "$HOME/bin exists: NO"
+  echo "Creating $HOME/bin"
+  mkdir -p "$HOME/bin"
+else
+  echo "$HOME/bin exists: OK"
+fi
+}
+
+install_scripts() {
+for file in "$PWD"/*; do
+  if [[ -f "$file" && "$(head -n 1 "$(basename "$file")")" == '#!/bin/env bash' ]]; then
+    if [ "$(basename "$0")" != "$(basename "$file")" ]; then
+      echo "Making $file an executable"
+      chmod u+x "$file"
+      echo "Copying $file to $HOME/bin"
+      cp "$file" "$HOME/bin"
+    else
+      echo "SKIPPING: $file"
+    fi
+  else
+    echo "$file is not a bash script: SKIPPING"
+  fi
+done
+}
+
+if [ "$#" -eq 0 ]; then
+  check_if_bin_exists
+  check_if_bin_in_path
+  install_scripts
+elif [ "$#" -eq 1 ]; then
+  if [ "$1" == '-h' ] || [ "$1" == '--help' ]; then
+    echo "$HELP"
+  elif [ "$1" == '-v' ] || [ "$1" == '--version' ]; then
+    echo "$VERSION"
+  else
+    echo "Invalid option: $1"
+  fi
+fi
