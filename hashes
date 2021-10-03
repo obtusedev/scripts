@@ -1,0 +1,35 @@
+#!/bin/env bash
+
+
+# Return common hashes
+# Copyright 2021 obtusedev
+
+# Available hashes
+# md5
+# sha1
+# sha224
+# sha256
+# sha384
+# sha512
+# sha512/224
+# sha512/256
+
+
+
+hashes=(md5 sha1 sha224 sha256 sha384 sha512 sha512224 sha512256)
+
+
+if [[ -d "$1" ]]; then
+  echo "$1: is a directory" && exit 0
+fi
+
+if [[ -f "$1" ]]; then
+  for hash in "${hashes[@]}"; do
+    ALGO="$(echo $hash | grep -o '[0-9]*')"
+    if [[ ALGO -eq 5 ]]; then
+      echo "$hash: $(md5sum $1)"
+    else
+      echo "$hash: $(shasum -a $ALGO $1)"
+    fi
+  done
+fi
