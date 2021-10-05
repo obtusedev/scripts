@@ -1,35 +1,48 @@
-#!/bin/env bash
+#!/bin/env python3
+
+'''
+Return common hashes
+Copyright 2021 obtusedev
+'''
+
+import hashlib
+import sys
+import os
+
+BLUE = '\033[34m'
+GREEN = '\033[32m'
+RESET = '\033[0m'
+
+USAGE = f'''Print out common hashes for file
+USAGE: {sys.argv[0]} <file>
+-h, --help     output this help msg'''
+
+HASHES = ['md5', 'sha1', 'sha224', 'sha256', 'sha384', 'sha512', 'sha512_224',
+          'sha512_256']
 
 
-# Return common hashes
-# Copyright 2021 obtusedev
-
-# Available hashes
-# md5
-# sha1
-# sha224
-# sha256
-# sha384
-# sha512
-# sha512/224
-# sha512/256
-
+def print_hashes(file):
+    '''print out hashes with alternating color'''
+    for _hash in HASHES:
+        h = hashlib.new(_hash)
+        with open(file, 'rb') as f:
+            data = f.read()
+            h.update(data)
+        if HASHES.index(_hash) % 2 == 0:
+          print(f'{GREEN}{_hash}: {h.hexdigest()}{RESET}')
+        else:
+          print(f'{BLUE}{_hash}: {h.hexdigest()}{RESET}')
 
 
-hashes=(md5 sha1 sha224 sha256 sha384 sha512 sha512224 sha512256)
-
-
-if [[ -d "$1" ]]; then
-  echo "$1: is a directory" && exit 0
-fi
-
-if [[ -f "$1" ]]; then
-  for hash in "${hashes[@]}"; do
-    ALGO="$(echo $hash | grep -o '[0-9]*')"
-    if [[ ALGO -eq 5 ]]; then
-      echo "$hash: $(md5sum $1)"
-    else
-      echo "$hash: $(shasum -a $ALGO $1)"
-    fi
-  done
-fi
+if len(sys.argv) == 1:
+    print('missing args\nuse -h or --help for usage')
+elif len(sys.argv) == 2 and sys.argv[1] in ('-h', '--help'):
+    print(USAGE)
+elif len(sys.argv) == 2 and os.path.isdir(sys.argv[1]):
+    print(f'{sys.argv[1]}: is a directory')
+elif len(sys.argv) == 2 and os.path.isfile(sys.argv[1]):
+    print_hashes(sys.argv[1])
+elif len(sys.argv) > 2:
+    print('too many args\nuse -h or --help for usage')
+else:
+    print('Something went wrong')
