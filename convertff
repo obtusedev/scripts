@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# convert otf and otf and more fonts to ttf
+
+fontforge -lang=ff -c 'Open($1); Generate($2);' "$1" "$2"

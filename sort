@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+# zsh uses () while bash uses {} for glob expansion
+mkdir -p {Photos,Videos}
+for image in *.(jpg|JPG|jpeg|JPEG|png|PNG|webp|WEBP|gif|GIF); do mv -n "$image" Photos/; done
+for video in *.(mp4|MP4|mkv|MKV|qt|QT|webm|WEBM|mov|MOV|m4v|MKV|avi|AVI); do mv -n "$video" Videos/; done
